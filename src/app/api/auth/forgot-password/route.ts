@@ -19,6 +19,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     }
 
+    // Ensure user has a non-null email before proceeding
+    const userEmail = user.email ?? null;
+    if (!userEmail) {
+      console.warn("Forgot password requested but user has no email");
+      return NextResponse.json({ ok: true });
+    }
+
     // Create token
     const { token, tokenHash } = generateResetToken();
 
@@ -38,7 +45,7 @@ export async function POST(req: Request) {
 
     // Send email (don't await to save time? we'll await to catch errors)
     try {
-      await sendResetEmail(user.email, resetUrl);
+      await sendResetEmail(userEmail, resetUrl);
     } catch (err) {
       console.error("Failed to send reset email:", err);
       // Still return success to user
