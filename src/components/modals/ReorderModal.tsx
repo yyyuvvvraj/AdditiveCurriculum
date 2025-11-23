@@ -15,7 +15,6 @@ type ReorderModalProps = {
 export default function ReorderModal({ open, setOpen, item }: ReorderModalProps) {
   const [qty, setQty] = React.useState(10);
 
-  // reset qty when modal opens
   React.useEffect(() => {
     if (open) setQty(10);
   }, [open]);
@@ -23,7 +22,7 @@ export default function ReorderModal({ open, setOpen, item }: ReorderModalProps)
   if (!open || !item) return null;
 
   function handleCreate() {
-    // simple feedback for now
+    if (!item) return;
     alert(`Purchase request created for ${qty} units of ${item.name}`);
     setOpen(false);
   }
