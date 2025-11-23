@@ -1,46 +1,89 @@
 // src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { NextAuthOptions } from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
+
+// Helper to compute role from email without changing Prisma schema
+function getRoleFromEmail(email?: string | null) {
+  if (!email) return "operator";
+  return email === "yuvraj280605@gmail.com" ? "admin" : "operator";
+}
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
+
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "258196648718-405g8f86mh65lssl19f5m2noqtt8o58p.apps.googleusercontent.com",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "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",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    // Optional demo credentials provider (useful for local dev)
+
+    // Optional: email/password login using CredentialsProvider
     CredentialsProvider({
-      name: "Demo",
+      name: "Email & Password",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // demo: accept any email/password — replace with real validation later
-        if (!credentials?.email) return null;
-        return { id: "demo:" + credentials.email, name: credentials.email.split("@")[0], email: credentials.email };
+        const email = credentials?.email;
+        const password = credentials?.password;
+
+        if (!email || !password) return null;
+
+        const user = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        if (!user || !user.password) {
+          return null;
+        }
+
+        const ok = await bcrypt.compare(password, user.password);
+        if (!ok) return null;
+
+        // NextAuth only cares that we return an object with id/email/name
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
 
+  // Use JWT sessions (works well with App Router)
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+  },
+
+  pages: {
+    signIn: "/login",
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
-      // first sign in
+    async jwt({ token, user }) {
+      // When user logs in, "user" is defined once
       if (user) {
-        token.user = user;
+        const email = user.email ?? token.email;
+        const role = getRoleFromEmail(email as string | undefined);
+
+        // Avoid TypeScript issues by using "any"
+        (token as any).role = role;
       }
       return token;
     },
+
     async session({ session, token }) {
-      // attach token.user to session.user so useAuth can read fields
-      (session as any).user = (token as any).user ?? session.user;
+      if (session.user) {
+        // Attach id & role to session.user so your AuthContext/AdminGuard work
+        (session.user as any).id = token.sub;
+        (session.user as any).role =
+          (token as any).role ?? getRoleFromEmail(session.user.email);
+      }
       return session;
     },
   },

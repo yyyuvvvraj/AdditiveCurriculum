@@ -1,38 +1,70 @@
 // src/components/Header.tsx
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import TopNav from "./TopNav";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-/**
- * Header:
- * - Shows the public landing header (Sign In CTA) when no session
- * - If the user is authenticated, render TopNav instead (prevents duplicate bars)
- */
 export default function Header() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const [isDemoAuthenticated, setIsDemoAuthenticated] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
-  // while loading prefer to render the public header (avoids flicker)
-  if (status === "loading" || !session) {
-    return (
-      <header className="backdrop-blur-md sticky top-0 z-40 shadow-md bg-gradient-to-r from-sky-600/80 via-cyan-600/80 to-indigo-700/80">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-cyan-500 via-sky-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-lg shadow-lg">VB</div>
-            <div>
-              <h1 className="text-lg font-bold text-white">Vasus Brakes</h1>
-              <p className="text-xs text-sky-100/80">Real-time Monitoring Suite</p>
-            </div>
-          </div>
+  useEffect(() => {
+    setMounted(true);
+    
+    // Only check for token if NOT on landing page
+    // This prevents "flashing" the dashboard header on the home page
+    if (pathname !== "/") {
+        const token = localStorage.getItem("token");
+        if (token) setIsDemoAuthenticated(true);
+    }
+  }, [pathname]);
 
-          <div>
-            <button onClick={() => window.location.href = "/login"} className="inline-flex items-center bg-white text-slate-900 px-4 py-2 rounded-lg shadow hover:scale-[1.02] transition">Sign In</button>
-          </div>
-        </div>
-      </header>
-    );
+  if (!mounted) return null;
+
+  // LOGIC: Show TopNav ONLY if logged in AND NOT on home page
+  const isLoggedIn = session || isDemoAuthenticated;
+  const showDashboardNav = isLoggedIn && pathname !== "/";
+
+  if (showDashboardNav) {
+    return <TopNav />;
   }
 
-  // user is authenticated -> show TopNav (so there is only one top bar)
-  return <TopNav />;
+  // --- PUBLIC HEADER (Landing Page View) ---
+  return (
+    <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 transition-all">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        
+        {/* LEFT: BRANDING */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-white font-extrabold text-sm shadow-md group-hover:bg-indigo-600 transition-colors">
+            VB
+          </div>
+          <div className="flex flex-col justify-center">
+            <span className="text-sm font-bold text-slate-900 leading-tight group-hover:text-indigo-600 transition-colors">
+              Vasus Brakes
+            </span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+              Control Tower
+            </span>
+          </div>
+        </Link>
+
+        {/* RIGHT: LOGIN BUTTON */}
+        <div className="flex items-center gap-4">
+            <Link 
+              href="/login" 
+              className="flex items-center gap-2 px-6 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white text-sm font-bold rounded-full shadow-sm transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95"
+            >
+              <svg className="w-4 h-4 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+              Login to Console
+            </Link>
+        </div>
+
+      </div>
+    </header>
+  );
 }
