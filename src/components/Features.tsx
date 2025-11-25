@@ -3,9 +3,9 @@ import FeatureCard from "./FeatureCard";
 
 export default function Features() {
   return (
-    <section id="features" className="py-16 bg-slate-50">
+    <section id="features" className="py-16">
       <div className="max-w-7xl mx-auto px-6">
-        <h3 className="text-3xl font-bold text-slate-800 mb-6">What the platform offers</h3>
+        <h3 className="text-3xl font-bold mb-6" style={{ color: 'var(--text)' }}>What the platform offers</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FeatureCard title="Inventory Intelligence" desc="Track stock levels of critical spares and consumables with trend insights." hint="Forecast reorder windows and avoid line stoppage." icon={<span>📦</span>} />

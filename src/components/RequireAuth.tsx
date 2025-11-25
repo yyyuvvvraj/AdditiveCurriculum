@@ -19,7 +19,7 @@ export default function RequireAuth({ children }: { children: ReactNode }) {
   if (status === "loading") {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="animate-pulse p-6 rounded-xl bg-white/80 shadow">Checking authentication…</div>
+        <div className="animate-pulse p-6 rounded-xl card">Checking authentication…</div>
       </div>
     );
   }

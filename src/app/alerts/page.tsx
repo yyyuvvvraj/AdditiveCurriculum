@@ -115,103 +115,103 @@ function AlertsContent() {
   }, [alerts, filter]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="min-h-screen bg-slate-900">
       <div className="max-w-5xl mx-auto px-6 py-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900">Alerts & Notifications</h1>
-            <div className="text-sm text-slate-500 mt-1">
-                {loading ? "Scanning system..." : `${alerts.length} active issues require attention`}
+            <h1 className="text-3xl font-extrabold text-slate-100">Alerts & Notifications</h1>
+            <div className="text-sm text-slate-400 mt-1">
+              {loading ? "Scanning system..." : `${alerts.length} active issues require attention`}
             </div>
           </div>
           
           <div className="flex items-center gap-3">
              {alerts.length > 0 && (
-                 <button onClick={handleDismissAll} className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-lg transition-colors">
-                    Dismiss All
-                 </button>
+               <button onClick={handleDismissAll} className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-slate-100 hover:bg-slate-800/50 rounded-lg transition-colors">
+                Dismiss All
+               </button>
              )}
-             <div className="flex bg-white p-1 rounded-lg border shadow-sm">
-                {['ALL', 'CRITICAL', 'WARNING'].map(f => (
-                    <button 
-                        key={f} 
-                        onClick={() => setFilter(f as any)}
-                        className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${filter === f ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
-                    >
-                        {f}
-                    </button>
-                ))}
+             <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-700">
+              {['ALL', 'CRITICAL', 'WARNING'].map(f => (
+                <button 
+                  key={f} 
+                  onClick={() => setFilter(f as any)}
+                  className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${filter === f ? 'bg-cyan-600 text-slate-900 shadow-sm' : 'text-slate-400 hover:bg-slate-700/50'}`}
+                >
+                  {f}
+                </button>
+              ))}
              </div>
           </div>
         </div>
 
         {/* Loading State */}
         {loading && (
-            <div className="space-y-4">
-                {[1, 2, 3].map(i => (
-                    <div key={i} className="h-24 bg-white rounded-xl border shadow-sm animate-pulse"></div>
-                ))}
-            </div>
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-24 bg-slate-800/40 rounded-xl border border-slate-700 shadow-sm animate-pulse"></div>
+            ))}
+          </div>
         )}
 
         {/* Empty State */}
         {!loading && alerts.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border shadow-sm text-center">
-                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h3 className="text-xl font-bold text-slate-800">All Systems Nominal</h3>
-                <p className="text-slate-500 mt-2 max-w-sm">No active alerts. Machines are running optimally and inventory levels are stable.</p>
-                <button onClick={() => { localStorage.removeItem('acknowledgedAlerts'); window.location.reload(); }} className="mt-6 px-4 py-2 text-sm text-indigo-600 hover:underline">
-                    Reset Demo History
-                </button>
+          <div className="flex flex-col items-center justify-center py-20 bg-slate-800/30 rounded-2xl border border-slate-700 shadow-sm text-center">
+            <div className="w-16 h-16 bg-emerald-950/30 text-emerald-300 rounded-full flex items-center justify-center mb-4">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
             </div>
+            <h3 className="text-xl font-bold text-slate-100">All Systems Nominal</h3>
+            <p className="text-slate-400 mt-2 max-w-sm">No active alerts. Machines are running optimally and inventory levels are stable.</p>
+            <button onClick={() => { localStorage.removeItem('acknowledgedAlerts'); window.location.reload(); }} className="mt-6 px-4 py-2 text-sm text-cyan-400 hover:underline">
+              Reset Demo History
+            </button>
+          </div>
         )}
 
         {/* Alerts List */}
         {!loading && visibleAlerts.length > 0 && (
             <div className="space-y-4">
                 {visibleAlerts.map(alert => {
-                    const isCritical = alert.severity === 'critical';
-                    return (
-                        <div 
-                            key={alert.id} 
-                            className={`flex items-start gap-4 p-5 rounded-xl border shadow-sm transition-all hover:shadow-md ${isCritical ? 'bg-red-50/50 border-red-200' : 'bg-amber-50/50 border-amber-200'}`}
-                        >
-                            {/* Icon Box */}
-                            <div className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${isCritical ? 'bg-red-500 text-white' : 'bg-amber-500 text-white'}`}>
-                                {Icons[alert.type]}
-                            </div>
+                  const isCritical = alert.severity === 'critical';
+                  return (
+                    <div 
+                      key={alert.id} 
+                      className={`flex items-start gap-4 p-5 rounded-xl border shadow-sm transition-all hover:shadow-md ${isCritical ? 'bg-slate-800/40 border-red-900/40' : 'bg-slate-800/30 border-amber-900/40'}`}
+                    >
+                      {/* Icon Box */}
+                      <div className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${isCritical ? 'bg-red-600 text-white' : 'bg-amber-600 text-white'}`}>
+                        {Icons[alert.type]}
+                      </div>
 
-                            {/* Content */}
-                            <div className="flex-1 pt-0.5">
-                                <div className="flex justify-between items-start">
-                                    <h4 className={`font-bold ${isCritical ? 'text-red-900' : 'text-amber-900'}`}>
-                                        {alert.type}: <span className="font-medium">{alert.sourceId}</span>
-                                    </h4>
-                                    <span className="text-xs font-medium text-slate-400">{new Date(alert.timestamp).toLocaleTimeString()}</span>
-                                </div>
-                                <p className={`mt-1 text-sm ${isCritical ? 'text-red-700' : 'text-amber-700'}`}>{alert.message}</p>
-                                
-                                <div className="mt-3 flex items-center gap-3">
-                                    <button 
-                                        onClick={() => handleAck(alert.id)}
-                                        className={`px-3 py-1.5 text-xs font-semibold rounded-lg border shadow-sm transition-colors ${isCritical ? 'bg-white border-red-200 text-red-700 hover:bg-red-50' : 'bg-white border-amber-200 text-amber-700 hover:bg-amber-50'}`}
-                                    >
-                                        Acknowledge
-                                    </button>
-                                    {alert.type === 'Machine' && (
-                                        <a href="/machines" className="text-xs font-medium text-slate-500 hover:text-slate-800 hover:underline">View Machine &rarr;</a>
-                                    )}
-                                    {alert.type === 'Inventory' && (
-                                        <a href="/inventory" className="text-xs font-medium text-slate-500 hover:text-slate-800 hover:underline">Check Stock &rarr;</a>
-                                    )}
-                                </div>
-                            </div>
+                      {/* Content */}
+                      <div className="flex-1 pt-0.5">
+                        <div className="flex justify-between items-start">
+                          <h4 className={`font-bold ${isCritical ? 'text-red-300' : 'text-amber-300'}`}>
+                            {alert.type}: <span className="font-medium text-slate-300">{alert.sourceId}</span>
+                          </h4>
+                          <span className="text-xs font-medium text-slate-400">{new Date(alert.timestamp).toLocaleTimeString()}</span>
                         </div>
-                    );
+                        <p className={`mt-1 text-sm ${isCritical ? 'text-red-300' : 'text-amber-300'}`}>{alert.message}</p>
+                                
+                        <div className="mt-3 flex items-center gap-3">
+                          <button 
+                            onClick={() => handleAck(alert.id)}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg border shadow-sm transition-colors ${isCritical ? 'bg-red-950/30 border-red-800 text-red-300 hover:bg-red-900/30' : 'bg-amber-950/30 border-amber-800 text-amber-300 hover:bg-amber-900/30'}`}
+                          >
+                            Acknowledge
+                          </button>
+                          {alert.type === 'Machine' && (
+                            <a href="/machines" className="text-xs font-medium text-slate-400 hover:text-slate-200 hover:underline">View Machine &rarr;</a>
+                          )}
+                          {alert.type === 'Inventory' && (
+                            <a href="/inventory" className="text-xs font-medium text-slate-400 hover:text-slate-200 hover:underline">Check Stock &rarr;</a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
                 })}
             </div>
         )}

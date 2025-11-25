@@ -1,23 +1,126 @@
 @import "tailwindcss";
 
+/* Design tokens: Dark-first theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --bg: #0b0f14; /* page background */
+  --surface: #0f1720; /* cards, panels */
+  --muted-surface: #131820; /* hovered surfaces */
+  --border: #1f2933;
+  --text: #e6eef6;
+  --muted: #9aa6b2;
+  --primary: #4f8cff; /* primary accent */
+  --primary-600: #3672e6;
+  --accent: #7bf0c7;
+  --success: #34d399;
+  --warning: #f59e0b;
+  --danger: #f87171;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+
+  /* Motion */
+  --ease-quick: cubic-bezier(.2,.9,.2,1);
+  --card-radius: 12px;
+  --shadow-elev-1: 0 6px 18px rgba(2,6,23,0.5);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Allow an optional light theme via `.light-theme` on `html` or `body` */
+html.light-theme {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --muted-surface: #f6f7fb;
+  --border: #e6eef6;
+  --text: #0b1220;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-600: #1e40af;
+  --accent: #06b6d4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global layout */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.45;
+  transition: background-color 200ms var(--ease-quick), color 200ms var(--ease-quick);
 }
-html{
-  scroll-behavior: smooth;
+
+/* Links */
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; color: var(--primary-600); }
+
+/* Headings */
+h1,h2,h3,h4,h5 { color: var(--text); margin: 0 0 0.5rem 0; }
+h1 { font-size: 1.6rem; }
+
+/* Container helper */
+.container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+
+/* Cards */
+.card {
+  background: linear-gradient(180deg, var(--surface), var(--muted-surface));
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-elev-1);
+  transition: transform 160ms var(--ease-quick), box-shadow 160ms var(--ease-quick);
+}
+.card:hover { transform: translateY(-4px); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 0.9rem; border-radius: 10px; border: none; cursor: pointer;
+  background: transparent; color: var(--text);
+  font-weight: 600; transition: background-color 160ms var(--ease-quick), transform 120ms var(--ease-quick);
+}
+.btn.primary {
+  background: linear-gradient(180deg, var(--primary), var(--primary-600));
+  color: white;
+}
+.btn.ghost { background: transparent; border: 1px solid var(--border); }
+.btn:active { transform: translateY(1px); }
+
+/* Top navigation */
+.topnav {
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  background: transparent; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Header / Footer */
+header.site-header { padding: 1rem 0; }
+footer.site-footer { padding: 2rem 0; color: var(--muted); }
+
+/* Forms */
+input, textarea, select {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  padding: 0.5rem; border-radius: 8px; outline: none;
+  transition: box-shadow 140ms var(--ease-quick), border-color 140ms var(--ease-quick);
+}
+input:focus, textarea:focus, select:focus { box-shadow: 0 6px 20px rgba(79,140,255,0.08); border-color: var(--primary-600); }
+
+/* Modal base */
+.modal { background: rgba(2,6,23,0.6); }
+.modal .card { max-width: 720px; margin: 2rem auto; }
+
+/* Small utilities */
+.muted { color: var(--muted); }
+.pill { padding: 0.25rem 0.6rem; border-radius: 999px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); }
+
+/* Scrollbar (modern browsers) */
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 10px; }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .container { padding: 0.75rem; }
+  h1 { font-size: 1.25rem; }
 }

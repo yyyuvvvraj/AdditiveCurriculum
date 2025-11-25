@@ -12,32 +12,32 @@ const ADMIN_EMAILS = ["admin@vb.com", "yuvraj280605@gmail.com"];
 function SettingsModal({ isOpen, onClose, user }: { isOpen: boolean; onClose: () => void; user: any }) {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-          <h3 className="font-bold text-slate-800">Account Settings</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">✕</button>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal animate-in fade-in duration-200">
+      <div className="card w-full max-w-md overflow-hidden">
+        <div className="px-6 py-4 border-b" style={{ borderColor: 'var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 className="font-bold">Account Settings</h3>
+          <button onClick={onClose} className="text-muted">✕</button>
         </div>
         <div className="p-6 space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Display Name</label>
-            <input type="text" defaultValue={user?.name || "Guest User"} className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800" />
+            <label className="block text-xs font-bold muted uppercase mb-1">Display Name</label>
+            <input type="text" defaultValue={user?.name || "Guest User"} className="w-full px-3 py-2 rounded-lg border" style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text)' }} />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email Address</label>
-            <input type="email" defaultValue={user?.email || "user@example.com"} disabled className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-500 cursor-not-allowed" />
+            <label className="block text-xs font-bold muted uppercase mb-1">Email Address</label>
+            <input type="email" defaultValue={user?.email || "user@example.com"} disabled className="w-full px-3 py-2 rounded-lg border" style={{ borderColor: 'var(--border)', background: 'var(--muted-surface)', color: 'var(--muted)' }} />
           </div>
           <div className="flex items-center justify-between pt-2">
-            <span className="text-sm text-slate-700 font-medium">Email Notifications</span>
+            <span className="text-sm font-medium">Email Notifications</span>
             <label className="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" defaultChecked className="sr-only peer" />
               <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
             </label>
           </div>
         </div>
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-2">
-          <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 transition-all">Cancel</button>
-          <button onClick={() => { alert("Profile Updated!"); onClose(); }} className="px-4 py-2 text-sm font-bold bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition-all">Save Changes</button>
+        <div className="px-6 py-4 border-t" style={{ borderColor: 'var(--border)', display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+          <button onClick={onClose} className="px-4 py-2 text-sm font-medium" style={{ color: 'var(--muted)' }}>Cancel</button>
+          <button onClick={() => { alert("Profile Updated!"); onClose(); }} className="px-4 py-2 text-sm font-bold btn primary">Save Changes</button>
         </div>
       </div>
     </div>
@@ -47,23 +47,23 @@ function SettingsModal({ isOpen, onClose, user }: { isOpen: boolean; onClose: ()
 function SupportModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden text-center p-8">
-        <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal animate-in fade-in duration-200">
+      <div className="card w-full max-w-md overflow-hidden text-center p-8">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'linear-gradient(180deg,var(--primary),var(--primary-600))' }}>
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         </div>
-        <h3 className="text-xl font-bold text-slate-900 mb-2">Need Help?</h3>
-        <p className="text-slate-500 mb-6 text-sm">Contact the IT support team for access issues or system bugs.</p>
+        <h3 className="text-xl font-bold mb-2">Need Help?</h3>
+        <p className="muted mb-6 text-sm">Contact the IT support team for access issues or system bugs.</p>
         
         <div className="space-y-3">
-          <a href="mailto:support@vasusbrakes.com" className="block w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-200">
+          <a href="mailto:support@vasusbrakes.com" className="block w-full py-3 btn primary rounded-xl font-bold transition-all shadow-lg">
             Email Support
           </a>
-          <button onClick={onClose} className="block w-full py-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-xl font-bold transition-all">
+          <button onClick={onClose} className="block w-full py-3 rounded-xl font-bold" style={{ background: 'var(--muted-surface)', border: '1px solid var(--border)', color: 'var(--text)' }}>
             Close
           </button>
         </div>
-        <p className="mt-6 text-xs text-slate-400">Version 2.4.0 • Build 2025.11</p>
+        <p className="mt-6 text-xs muted">Version 2.4.0 • Build 2025.11</p>
       </div>
     </div>
   );
@@ -182,7 +182,7 @@ export default function TopNav() {
 
                 {/* Dropdown Content */}
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl py-1 border border-slate-100 animate-in fade-in slide-in-from-top-2">
+                  <div className="absolute right-0 mt-2 w-48 card py-1 animate-in fade-in slide-in-from-top-2">
                     <div className="px-4 py-3 border-b border-slate-100 sm:hidden">
                       <p className="text-sm font-medium text-slate-900">{user?.name || "Guest"}</p>
                       <p className="text-xs text-slate-500 truncate">{user?.email}</p>
@@ -191,13 +191,15 @@ export default function TopNav() {
                     {/* FUNCTIONAL BUTTONS */}
                     <button 
                       onClick={() => { setShowSettings(true); setIsUserMenuOpen(false); }} 
-                      className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600"
+                      className="block w-full text-left px-4 py-2 text-sm"
+                      style={{ color: 'var(--text)' }}
                     >
                       Account Settings
                     </button>
                     <button 
                       onClick={() => { setShowSupport(true); setIsUserMenuOpen(false); }} 
-                      className="block w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600"
+                      className="block w-full text-left px-4 py-2 text-sm"
+                      style={{ color: 'var(--text)' }}
                     >
                       Support
                     </button>
@@ -205,7 +207,8 @@ export default function TopNav() {
                     <div className="border-t border-slate-100 mt-1"></div>
                     <button 
                       onClick={() => { logout(); router.push("/login"); }}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium"
+                      className="block w-full text-left px-4 py-2 text-sm font-medium"
+                      style={{ color: 'var(--danger)' }}
                     >
                       Sign out
                     </button>

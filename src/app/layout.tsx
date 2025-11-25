@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-b from-white to-slate-50 text-slate-800">
+      <body className="min-h-screen">
         <Providers>
           <Header />
           {children}

@@ -58,33 +58,33 @@ export default function ForgotPasswordPage() {
   // --- SUCCESS STATE VIEW ---
   if (status === "sent") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-100 p-8 text-center animate-in fade-in zoom-in-95 duration-300">
-          <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full card rounded-2xl shadow-xl border border-slate-700/50 p-8 text-center animate-in fade-in zoom-in-95 duration-300">
+          <div className="w-16 h-16 bg-emerald-950/30 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckIcon />
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Check your email</h2>
-          <p className="text-slate-500 mb-6">
+          <h2 className="text-2xl font-bold text-slate-100 mb-2">Check your email</h2>
+          <p className="text-slate-400 mb-6">
             We sent a password reset link to <br/>
-            <span className="font-bold text-slate-800">{email}</span>
+            <span className="font-bold text-slate-200">{email}</span>
           </p>
           
           <div className="space-y-3">
             <button 
               onClick={() => window.open('mailto:', '_blank')}
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all"
+              className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-slate-900 font-bold rounded-xl shadow-lg shadow-cyan-600/30 transition-all"
             >
               Open Email App
             </button>
             <button 
               onClick={() => { setStatus("idle"); setEmail(""); }}
-              className="w-full py-3 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 transition-all"
+              className="w-full py-3 bg-slate-800 border border-slate-700 text-slate-300 font-bold rounded-xl hover:bg-slate-700 transition-all"
             >
               Try another email
             </button>
           </div>
           
-          <div className="mt-6 text-xs text-slate-400">
+          <div className="mt-6 text-xs text-slate-500">
             Did not receive the email? Check your spam filter.
           </div>
         </div>
@@ -94,26 +94,26 @@ export default function ForgotPasswordPage() {
 
   // --- FORM STATE VIEW ---
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Ambient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-96 bg-indigo-100 rounded-full blur-3xl opacity-50 -translate-y-1/2 pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-96 bg-cyan-600/10 rounded-full blur-3xl opacity-50 -translate-y-1/2 pointer-events-none"></div>
 
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 relative z-10 overflow-hidden">
+      <div className="w-full max-w-md card rounded-2xl shadow-xl border border-slate-700/50 relative z-10 overflow-hidden">
         
         <div className="px-8 py-8">
           <div className="text-center mb-8">
-            <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-indigo-100">
-                <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+            <div className="w-12 h-12 bg-cyan-950/30 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-cyan-800/50">
+                <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
             </div>
-            <h1 className="text-2xl font-extrabold text-slate-900">Forgot Password?</h1>
-            <p className="text-slate-500 mt-2 text-sm">
+            <h1 className="text-2xl font-extrabold text-slate-100">Forgot Password?</h1>
+            <p className="text-slate-400 mt-2 text-sm">
               No worries, we'll send you reset instructions.
             </p>
           </div>
 
           <form onSubmit={submitEmail} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+              <label htmlFor="email" className="block text-xs font-bold text-slate-400 uppercase mb-1 ml-1">
                 Email Address
               </label>
               <input
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all text-slate-800 placeholder:text-slate-400"
+                className="w-full px-4 py-3 rounded-xl border border-slate-700 bg-slate-800 text-slate-100 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 outline-none transition-all placeholder:text-slate-500"
                 placeholder="Enter your email"
                 autoFocus
               />
@@ -130,7 +130,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-cyan-600 hover:bg-cyan-500 text-slate-900 font-bold rounded-xl shadow-lg shadow-cyan-600/30 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {status === "sending" ? (
                 <>
@@ -141,7 +141,7 @@ export default function ForgotPasswordPage() {
             </button>
 
             {message && (
-              <div className={`p-3 rounded-lg text-sm font-medium flex items-start gap-2 ${status === 'error' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
+              <div className={`p-3 rounded-lg text-sm font-medium flex items-start gap-2 ${status === 'error' ? 'bg-red-950/30 text-red-300 border border-red-800' : 'bg-blue-950/30 text-blue-300 border border-blue-800'}`}>
                 <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 {message}
               </div>
@@ -149,10 +149,10 @@ export default function ForgotPasswordPage() {
           </form>
         </div>
 
-        <div className="bg-slate-50 px-8 py-4 border-t border-slate-100 text-center">
+        <div className="bg-slate-800/50 px-8 py-4 border-t border-slate-700/50 text-center">
           <Link 
             href="/login" 
-            className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors flex items-center justify-center gap-2 group"
+            className="text-sm font-bold text-slate-300 hover:text-cyan-400 transition-colors flex items-center justify-center gap-2 group"
           >
             <ArrowLeftIcon />
             <span>Back to log in</span>

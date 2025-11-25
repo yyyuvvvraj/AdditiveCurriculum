@@ -65,6 +65,9 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 
+  // Disable CSRF check workaround - helps with state mismatch in development
+  useSecureCookies: process.env.NODE_ENV === "production",
+
   callbacks: {
     async jwt({ token, user }) {
       // When user logs in, "user" is defined once

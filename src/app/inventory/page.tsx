@@ -12,13 +12,13 @@ import { fetchInventory, addInventoryItem, InventoryItem } from "@/lib/api";
 
 function InventoryKPI({ title, value, icon, color }: { title: string, value: string | number, icon: React.ReactNode, color: string }) {
   return (
-    <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4">
+    <div className="card p-4 rounded-xl border border-slate-700/50 shadow-sm flex items-center gap-4">
       <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${color} text-white shadow-sm`}>
         {icon}
       </div>
       <div>
-        <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">{title}</div>
-        <div className="text-2xl font-extrabold text-slate-800">{value}</div>
+        <div className="text-slate-400 text-xs font-bold uppercase tracking-wider">{title}</div>
+        <div className="text-2xl font-extrabold text-slate-100">{value}</div>
       </div>
     </div>
   );
@@ -35,10 +35,10 @@ function StockLevelBar({ current, max }: { current: number, max: number }) {
   return (
     <div className="w-24">
       <div className="flex justify-between text-[10px] mb-1 font-medium">
-        <span className={isLow ? "text-red-600" : "text-slate-600"}>{current}</span>
-        <span className="text-slate-400">ROP: {max}</span>
+        <span className={isLow ? "text-red-400" : "text-slate-400"}>{current}</span>
+        <span className="text-slate-500">ROP: {max}</span>
       </div>
-      <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
         <div className={`h-full rounded-full transition-all duration-500 ${color}`} style={{ width: `${percentage}%` }}></div>
       </div>
     </div>
@@ -69,7 +69,7 @@ function Pagination({ current, total, onChange }: { current: number, total: numb
         <button 
             onClick={() => onChange(Math.max(1, current - 1))}
             disabled={current === 1}
-            className="px-3 py-1 rounded border bg-white disabled:opacity-50 hover:bg-slate-50 text-slate-600 text-sm font-medium transition-all"
+            className="px-3 py-1 rounded border bg-slate-800 border-slate-700 disabled:opacity-50 hover:bg-slate-700 text-slate-300 text-sm font-medium transition-all"
         >
             Prev
         </button>
@@ -81,10 +81,10 @@ function Pagination({ current, total, onChange }: { current: number, total: numb
                 disabled={typeof p !== 'number'}
                 className={`w-8 h-8 rounded text-xs font-bold flex items-center justify-center transition-all ${
                     p === current 
-                        ? 'bg-indigo-600 text-white shadow-md scale-105' 
+                        ? 'bg-cyan-600 text-white shadow-md scale-105' 
                         : typeof p === 'number' 
-                            ? 'bg-white border hover:bg-slate-50 text-slate-600' 
-                            : 'text-slate-400 cursor-default'
+                            ? 'bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300' 
+                            : 'text-slate-500 cursor-default'
                 }`}
             >
                 {p}
@@ -94,7 +94,7 @@ function Pagination({ current, total, onChange }: { current: number, total: numb
         <button 
             onClick={() => onChange(Math.min(total, current + 1))}
             disabled={current === total}
-            className="px-3 py-1 rounded border bg-white disabled:opacity-50 hover:bg-slate-50 text-slate-600 text-sm font-medium transition-all"
+            className="px-3 py-1 rounded border bg-slate-800 border-slate-700 disabled:opacity-50 hover:bg-slate-700 text-slate-300 text-sm font-medium transition-all"
         >
             Next
         </button>
@@ -202,13 +202,13 @@ function InventoryContent() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="min-h-screen bg-slate-900">
       <div className="max-w-7xl mx-auto px-6 py-8">
         
         {/* HEADER */}
         <div className="mb-8">
-          <h1 className="text-3xl font-extrabold text-slate-900">Inventory Management</h1>
-          <div className="text-sm text-slate-500 mt-1">Real-time tracking across all plant locations</div>
+          <h1 className="text-3xl font-extrabold text-slate-100">Inventory Management</h1>
+          <div className="text-sm text-slate-400 mt-1">Real-time tracking across all plant locations</div>
         </div>
 
         {/* KPI DASHBOARD */}
@@ -220,36 +220,36 @@ function InventoryContent() {
         </div>
 
         {/* CONTROLS BAR */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+        <div className="card p-4 rounded-xl border border-slate-700/50 shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative">
-              <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search parts..." className="pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm w-64 focus:ring-2 focus:ring-indigo-500 outline-none" />
+              <svg className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search parts..." className="pl-10 pr-4 py-2 border border-slate-700 bg-slate-800 text-slate-100 rounded-lg text-sm w-64 focus:ring-2 focus:ring-cyan-500 outline-none placeholder:text-slate-500" />
             </div>
-            <select value={category} onChange={e => setCategory(e.target.value)} className="px-4 py-2 border border-slate-300 rounded-lg text-sm bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none">
+            <select value={category} onChange={e => setCategory(e.target.value)} className="px-4 py-2 border border-slate-700 bg-slate-800 text-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-500 outline-none">
               {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
             </select>
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-            <button onClick={() => setFilterLow(!filterLow)} className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all flex items-center gap-2 ${filterLow ? 'bg-red-50 border-red-200 text-red-700' : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-50'}`}>
+            <button onClick={() => setFilterLow(!filterLow)} className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all flex items-center gap-2 ${ filterLow ? 'bg-red-950/30 border-red-800 text-red-400' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`}>
               {filterLow ? <><span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> Low Stock Only</> : 'Show Low Stock'}
             </button>
-            <button onClick={() => setIsAddOpen(true)} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded-lg shadow hover:bg-indigo-700 transition-colors">
+            <button onClick={() => setIsAddOpen(true)} className="px-4 py-2 bg-cyan-600 text-slate-900 text-sm font-bold rounded-lg shadow hover:bg-cyan-500 transition-colors">
               + Add Item
             </button>
           </div>
         </div>
 
         {/* DATA TABLE */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="card rounded-2xl border border-slate-700/50 shadow-sm overflow-hidden">
           {isLoading ? (
             <div className="p-20 flex justify-center items-center text-slate-400">Loading inventory...</div>
           ) : (
             <>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-200">
+                  <thead className="bg-slate-800/50 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-700">
                     <tr>
                       <th className="px-6 py-4">Part Details</th>
                       <th className="px-6 py-4">Category</th>
@@ -258,25 +258,25 @@ function InventoryContent() {
                       <th className="px-6 py-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-slate-700/50">
                     {paginatedItems.map((item) => (
-                      <tr key={item.id} className="hover:bg-slate-50/80 transition-colors group">
+                      <tr key={item.id} className="hover:bg-slate-800/30 transition-colors group">
                         <td className="px-6 py-4">
-                          <div className="font-bold text-slate-900">{item.name}</div>
-                          <div className="text-xs text-slate-400 font-mono">{item.id}</div>
+                          <div className="font-bold text-slate-100">{item.name}</div>
+                          <div className="text-xs text-slate-500 font-mono">{item.id}</div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="inline-flex px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">{item.category}</span>
+                          <span className="inline-flex px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">{item.category}</span>
                         </td>
                         <td className="px-6 py-4">
                           <StockLevelBar current={item.stock} max={item.rop} />
                         </td>
                         <td className="px-6 py-4">
-                          <div className="text-slate-700 font-medium">{item.vendor}</div>
-                          <div className="text-xs text-slate-400">{item.leadTime} day lead</div>
+                          <div className="text-slate-300 font-medium">{item.vendor}</div>
+                          <div className="text-xs text-slate-500">{item.leadTime} day lead</div>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <button onClick={() => { setReorderItem(item); setReorderQty(Math.max(item.rop*2, item.stock+item.rop)); }} className="px-3 py-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-lg hover:bg-indigo-100 transition-all opacity-0 group-hover:opacity-100">
+                          <button onClick={() => { setReorderItem(item); setReorderQty(Math.max(item.rop*2, item.stock+item.rop)); }} className="px-3 py-1.5 text-xs font-bold text-cyan-400 bg-cyan-950/30 border border-cyan-800 rounded-lg hover:bg-cyan-900/50 transition-all opacity-0 group-hover:opacity-100">
                             Reorder
                           </button>
                         </td>
@@ -288,9 +288,9 @@ function InventoryContent() {
 
               {/* PAGINATION FOOTER */}
               {filtered.length > 0 && (
-                <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between bg-slate-50/50">
-                  <div className="text-sm text-slate-500">
-                    Showing <span className="font-bold">{((currentPage - 1) * itemsPerPage) + 1}</span> to <span className="font-bold">{Math.min(currentPage * itemsPerPage, filtered.length)}</span> of {filtered.length} items
+                <div className="px-6 py-4 border-t border-slate-700 flex items-center justify-between bg-slate-800/30">
+                  <div className="text-sm text-slate-400">
+                    Showing <span className="font-bold text-slate-300">{((currentPage - 1) * itemsPerPage) + 1}</span> to <span className="font-bold text-slate-300">{Math.min(currentPage * itemsPerPage, filtered.length)}</span> of {filtered.length} items
                   </div>
                   <Pagination current={currentPage} total={totalPages} onChange={setCurrentPage} />
                 </div>

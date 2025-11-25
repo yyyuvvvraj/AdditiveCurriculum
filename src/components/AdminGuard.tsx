@@ -36,7 +36,7 @@ export default function AdminGuard({ children }: { children: ReactNode }) {
   if (status === "loading") {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        Checking admin access…
+        <div className="card p-6">Checking admin access…</div>
       </div>
     );
   }

@@ -13,31 +13,31 @@ export type Machine = {
 };
 
 function uptimeColor(u: number) {
-  if (u >= 0.95) return "text-emerald-600";
-  if (u >= 0.8) return "text-amber-500";
-  return "text-red-500";
+  if (u >= 0.95) return "var(--success)";
+  if (u >= 0.8) return "var(--warning)";
+  return "var(--danger)";
 }
 
 export default function MachineCard({ m }: { m: Machine }) {
   return (
-    <div className="rounded-2xl bg-white p-4 border shadow-sm min-h-[220px] flex flex-col justify-between">
+    <div className="card p-4 min-h-[220px] flex flex-col justify-between">
       <div>
         <div className="flex items-start justify-between mb-2">
           <div>
-            <div className="text-xs text-slate-400">Line · {m.id}</div>
-            <div className="text-lg font-semibold text-slate-800">{m.name}</div>
+            <div className="text-xs muted">Line · {m.id}</div>
+            <div className="text-lg font-semibold">{m.name}</div>
           </div>
           <div className="text-right">
-            <div className="text-xs text-slate-400">Uptime</div>
-            <div className={`font-semibold ${uptimeColor(m.uptimePct)}`}>
+            <div className="text-xs muted">Uptime</div>
+            <div className={`font-semibold`} style={{ color: uptimeColor(m.uptimePct) }}>
               {(m.uptimePct * 100).toFixed(0)}%
             </div>
           </div>
         </div>
 
-        <div className="text-sm text-slate-500 mb-2">
-          Last active:{" "}
-          <span className="text-slate-700">{m.lastActive ? new Date(m.lastActive).toLocaleString() : "-"}</span>
+        <div className="text-sm muted mb-2">
+          Last active: {" "}
+          <span style={{ color: 'var(--text)' }}>{m.lastActive ? new Date(m.lastActive).toLocaleString() : "-"}</span>
         </div>
 
         <div className="mb-3">
@@ -46,9 +46,9 @@ export default function MachineCard({ m }: { m: Machine }) {
       </div>
 
       <div className="flex items-center gap-3">
-        <button className="px-3 py-2 text-sm rounded-lg border bg-white">Telemetry</button>
-        <button className="px-3 py-2 text-sm rounded-lg border bg-white">Logs</button>
-        <button className="ml-auto px-4 py-2 text-sm rounded-lg bg-amber-400 text-slate-900 font-medium shadow">
+        <button className="btn ghost px-3 py-2 text-sm">Telemetry</button>
+        <button className="btn ghost px-3 py-2 text-sm">Logs</button>
+        <button className="ml-auto btn" style={{ background: 'var(--warning)', color: '#0b1220', fontWeight: 700 }}>
           Acknowledge
         </button>
       </div>

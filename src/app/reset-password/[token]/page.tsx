@@ -92,30 +92,30 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[70vh] flex items-center justify-center px-4 py-12 bg-slate-900">
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         {/* FORM */}
-        <div className="bg-white neocard rounded-xl p-8 shadow-md">
-          <h1 className="text-2xl font-bold">Reset your password</h1>
-          <p className="mt-2 text-sm text-slate-600">
+        <div className="card rounded-xl p-8 shadow-md border border-slate-700/50">
+          <h1 className="text-2xl font-bold text-slate-100">Reset your password</h1>
+          <p className="mt-2 text-sm text-slate-400">
             Set a new password for your account. The link you received is
             single-use and expires automatically.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="block text-sm font-medium text-slate-300">
               Reset token
             </label>
             <input
               value={token}
               onChange={(e) => setToken(e.target.value.trim())}
-              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-neo-indigo outline-none text-sm"
+              className="w-full px-4 py-3 rounded-lg border border-slate-600 bg-slate-800 text-slate-100 focus:ring-2 focus:ring-cyan-500 outline-none text-sm"
               placeholder="Paste token from email (or use link)"
               aria-label="reset token"
             />
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mt-2">
+              <label className="block text-sm font-medium text-slate-300 mt-2">
                 New password
               </label>
               <div className="relative mt-2">
@@ -123,23 +123,23 @@ export default function ResetPasswordPage() {
                   type={visible ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-neo-indigo outline-none text-sm"
+                  className="w-full px-4 py-3 rounded-lg border border-slate-600 bg-slate-800 text-slate-100 focus:ring-2 focus:ring-cyan-500 outline-none text-sm"
                   placeholder="Minimum 8 characters"
                   aria-label="new password"
                 />
                 <button
                   type="button"
                   onClick={() => setVisible((v) => !v)}
-                  className="absolute right-2 top-2 h-8 px-2 rounded text-sm bg-white border"
+                  className="absolute right-2 top-2 h-8 px-2 rounded text-sm bg-slate-700 border border-slate-600 text-slate-200 hover:bg-slate-600"
                   aria-pressed={visible}
                 >
                   {visible ? "Hide" : "Show"}
                 </button>
               </div>
-              <div className="flex items-center justify-between mt-2 text-xs text-slate-500">
+              <div className="flex items-center justify-between mt-2 text-xs text-slate-400">
                 <div>
                   Password strength:{" "}
-                  <span className="font-medium text-slate-700">
+                  <span className="font-medium text-slate-300">
                     {passwordStrengthLabel(password)}
                   </span>
                 </div>
@@ -148,14 +148,14 @@ export default function ResetPasswordPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mt-2">
+              <label className="block text-sm font-medium text-slate-300 mt-2">
                 Confirm password
               </label>
               <input
                 type={visible ? "text" : "password"}
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-neo-indigo outline-none text-sm"
+                className="w-full px-4 py-3 rounded-lg border border-slate-600 bg-slate-800 text-slate-100 focus:ring-2 focus:ring-cyan-500 outline-none text-sm"
                 placeholder="Repeat the new password"
                 aria-label="confirm password"
               />
@@ -165,11 +165,11 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className={`flex-1 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-white font-medium shadow-md transition
+                className={`flex-1 inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-slate-900 font-medium shadow-md transition
                   ${
                     status === "submitting"
-                      ? "bg-amber-500/90"
-                      : "bg-amber-400 hover:bg-amber-300"
+                      ? "bg-cyan-600/90"
+                      : "bg-cyan-500 hover:bg-cyan-400"
                   }`}
               >
                 {status === "submitting" ? (
@@ -207,32 +207,32 @@ export default function ResetPasswordPage() {
                   setPassword("");
                   setConfirm("");
                 }}
-                className="px-3 py-2 rounded-md border text-sm"
+                className="px-3 py-2 rounded-md border border-slate-600 text-slate-300 hover:bg-slate-800 text-sm"
               >
                 Clear
               </button>
             </div>
 
             {status === "error" && message && (
-              <div className="mt-3 text-sm rounded-md px-3 py-2 bg-rose-50 text-rose-700 border border-rose-100">
+              <div className="mt-3 text-sm rounded-md px-3 py-2 bg-red-950/50 text-red-300 border border-red-800">
                 {message}
               </div>
             )}
 
             {status === "success" && message && (
-              <div className="mt-3 text-sm rounded-md px-3 py-2 bg-emerald-50 text-emerald-700 border border-emerald-100">
+              <div className="mt-3 text-sm rounded-md px-3 py-2 bg-emerald-950/50 text-emerald-300 border border-emerald-800">
                 {message}
               </div>
             )}
           </form>
 
-          <div className="mt-6 text-xs text-slate-500">
+          <div className="mt-6 text-xs text-slate-400">
             <div>
               If the token is invalid or expired, request a new reset link from
               the sign-in page.
             </div>
             <div className="mt-2">
-              <a href="/login" className="text-amber-600">
+              <a href="/login" className="text-cyan-400 hover:text-cyan-300">
                 Back to sign in
               </a>
             </div>
@@ -241,7 +241,7 @@ export default function ResetPasswordPage() {
 
         {/* PREVIEW / HELP */}
         <aside className="flex flex-col gap-4 items-center justify-start">
-          <div className="w-full rounded-xl bg-white shadow-lg border p-4">
+          <div className="w-full rounded-xl card shadow-lg border border-slate-700/50 p-4">
             <img
               src="/dashboard-preview.png"
               alt="Dashboard preview"
@@ -249,8 +249,8 @@ export default function ResetPasswordPage() {
             />
           </div>
 
-          <div className="w-full neocard rounded-xl p-4 text-sm text-slate-600">
-            <div className="font-semibold mb-2">Reset link info</div>
+          <div className="w-full card rounded-xl p-4 text-sm text-slate-400 border border-slate-700/50">
+            <div className="font-semibold mb-2 text-slate-200">Reset link info</div>
             The reset link you received contains a one-time token. If clicking
             the link opened this page, the token is already populated. You can
             also paste the token manually.

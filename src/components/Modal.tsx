@@ -17,16 +17,11 @@ export default function Modal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center modal">
+      <div className="card w-full max-w-md p-6 animate-fadeIn">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-lg text-slate-800">{title}</h2>
-          <button
-            onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 text-xl leading-none"
-          >
-            ×
-          </button>
+          <h2 className="font-semibold text-lg">{title}</h2>
+          <button onClick={onClose} className="text-muted text-xl leading-none">×</button>
         </div>
 
         {children}
