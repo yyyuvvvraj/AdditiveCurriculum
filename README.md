@@ -1,191 +1,137 @@
-# 🚀 AdditiveCurriculum — Smarter Dashboards. Seamless Automation.
+# Additive Curriculum - Smart Manufacturing Dashboard
 
-**Welcome to AdditiveCurriculum!**
-An interactive, automation‑powered curriculum management & visualization system designed to help you build dashboards, transform data, and integrate Power BI with ease.
+A comprehensive Inventory and Machine Management System designed for Additive Manufacturing workflows. This application integrates real-time inventory tracking, machine monitoring, and AI-driven analytics to optimize production efficiency.
 
-Whether you're creating real‑time dashboards, converting Excel into dynamic JSON, or generating presentations automatically — this project is built to feel effortless, clean, and technically powerful.
+## 🚀 Key Features
 
----
+* **🔐 Secure Authentication**: Role-based access control using **NextAuth.js** (Google OAuth & Credentials).
+* **📦 Inventory Management**: Track parts, current stock, reorder points (ROP), and vendors with real-time updates.
+* **🤖 AI-Powered Analytics**: Integrated **Google Gemini AI** for predictive maintenance, inventory insights, and an intelligent chatbot assistant.
+* **⚙️ Machine Monitoring**: Track OEE (Overall Equipment Effectiveness), machine status, and maintenance history.
+* **📊 Interactive Dashboards**: Visual data representation using dynamic charts for consumption, stock levels, and alerts.
+* **🧠 Genetic Algorithm Optimization**: Advanced logic for maintenance scheduling and resource optimization.
+* **🔔 Smart Alerts**: Automated warnings for low stock and maintenance requirements.
 
-## Table of Contents
+## 🛠️ Tech Stack
 
-* [Features](#features)
-* [Tech stack](#tech-stack)
-* [Repository structure](#repository-structure)
-* [Prerequisites](#prerequisites)
-* [Quick start](#quick-start)
-* [Power BI integration](#power-bi-integration)
-* [Scripts & utilities](#scripts--utilities)
-* [Development notes](#development-notes)
-* [Deployment](#deployment)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
+* **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+* **Language**: [TypeScript](https://www.typescriptlang.org/)
+* **Database**: [MongoDB](https://www.mongodb.com/) (Atlas)
+* **ORM**: [Prisma](https://www.prisma.io/)
+* **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+* **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+* **AI Provider**: [Google Gemini API](https://ai.google.dev/)
+* **Visualization**: Recharts
 
----
+## 🏗️ Architecture
 
-## ✨ Features
+The project follows a modern, modular architecture:
 
-* Next.js + React dashboard UI
-* Live / embedded Power BI reports integration options
-* Utilities for converting Excel files to JSON
-* PPT generation utilities (PowerPoint slides from paper/report)
-* Helpful dev scripts for linting, building and local testing
+```text
+├── src/
+│   ├── app/              # Next.js App Router pages (Dashboard, Inventory, Machines)
+│   ├── components/       # Reusable UI components (Charts, AI Panels, Modals)
+│   ├── lib/              # Backend utilities (Prisma client, AI logic, Email)
+│   ├── hooks/            # Custom React hooks (useRealtime, etc.)
+│   └── data/             # Mock data and seed templates
+├── prisma/               # Database schema and migrations
+└── public/               # Static assets
+````
 
-## 🧰 Tech Stack
+## 🏁 Getting Started
 
-* Node.js (>= 16.x)
-* Next.js (React)
-* TypeScript (if present) / JavaScript
-* Power BI embedded reports (iframe / Power BI JS SDK)
-* Optional: Python scripts for data transforms (if present)
+Follow these steps to set up the project locally.
 
-## 📁 Repository Structure (suggested / typical)
+### 1\. Prerequisites
 
-```
-AdditiveCurriculum/
-├─ src/                 # Next.js app source (components, pages, app)
-│  ├─ app/
-│  └─ components/
-├─ scripts/             # Excel-to-JSON, PPT generation, helpers
-├─ public/              # static assets
-├─ .env.local           # local environment variables (not committed)
-├─ package.json
-└─ README.md            # <- you are here
-```
+Ensure you have the following installed:
 
-> If your project uses `src/app/dashboard/page.tsx` (Next.js app router), the dashboard pages and Power BI embeds live under `src/app/dashboard`.
+  * [Node.js](https://nodejs.org/) (v18+ recommended)
+  * A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+  * A [Google Cloud](https://console.cloud.google.com/) project (for OAuth)
 
-## ⚙️ Prerequisites
-
-* Node.js and npm (or yarn) installed
-* Optional: Python 3.x if repo includes Python utilities
-* Power BI Pro / Embedded access if you plan to integrate protected reports
-
-## 🚀 Quick Start (development)
-
-1. Clone the repo
+### 2\. Clone the Repository
 
 ```bash
-git clone https://github.com/yyyuvvvraj/AdditiveCurriculum.git
-cd AdditiveCurriculum
+git clone [https://github.com/your-username/additive-curriculum.git](https://github.com/your-username/additive-curriculum.git)
+cd additive-curriculum
 ```
 
-2. Install dependencies
+### 3\. Install Dependencies
 
 ```bash
 npm install
-# or
-# yarn install
 ```
 
-3. Create local environment file
+### 4\. Configure Environment Variables
+
+Create a `.env` file in the root directory and add the following keys:
+
+```env
+# Database
+DATABASE_URL="mongodb+srv://<user>:<password>@cluster0.abcd.mongodb.net/additive_curriculum?retryWrites=true&w=majority"
+
+# Authentication (NextAuth)
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-super-secret-key"
+
+# Google OAuth
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# AI Integration
+GEMINI_API_KEY="your-google-gemini-api-key"
+
+# Application Settings
+NEXT_PUBLIC_API_URL="http://localhost:3000"
+```
+
+### 5\. Setup Database
+
+Push the Prisma schema to your MongoDB database:
 
 ```bash
-cp .env.example .env.local
-# open .env.local and fill values (API keys, Power BI embed tokens, etc.)
+npx prisma generate
+npx prisma db push
 ```
 
-4. Run dev server
+*(Optional) Seed the database with initial data:*
+
+```bash
+npx prisma db seed
+```
+
+### 6\. Run the Application
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-# yarn dev
 ```
 
-5. Open `http://localhost:3000` in your browser.
-
-## Common npm scripts (example)
-
-* `npm run dev` - start development server
-* `npm run build` - build for production
-* `npm run start` - start production server after build
-* `npm run lint` - run linter
-* `npm run format` - format code
-
-If these scripts are missing in `package.json`, add or adapt as needed.
-
-## 📊 Power BI Integration
-
-There are a few common patterns to integrate Power BI into a web app. Choose the one that fits your hosting and licensing:
-
-### 1) Publish to web (public)
-
-* Quickest option: use Power BI's "Publish to web" and embed the iframe. **Not recommended** for sensitive data.
-
-### 2) Power BI Embedded / Secure embed (recommended for private data)
-
-* Use an embed token obtained from a backend service (using the Power BI REST API or Azure AD).
-* Backend generates short-lived tokens and the client uses `powerbi-client` to render.
-* Typical flow:
-
-  1. User requests page → client asks backend for embed token
-  2. Backend calls Power BI REST (with service principal or master user) and returns token
-  3. Client uses `powerbi-client` to embed the report with the token
-
-For local development you can temporarily use an exported report or a publicly published report.
-
-> NOTE: In your repo there's a comment `No option publish to web` — if you cannot publish publicly, implement the secure/embed flow above and host the backend on EC2 (or any server) to mint tokens.
-
-## 🛠️ Scripts & Utilities
-
-### Excel → JSON converter
-
-If the repo contains a utility (e.g. `scripts/excel-to-json.js` or a Python script), run it like:
-
-```bash
-# Node.js example
-node scripts/excel-to-json.js --input data/sheet.xlsx --output data/sheet.json
-
-# Python example
-python scripts/excel_to_json.py data/sheet.xlsx data/sheet.json
-```
-
-### PPT generator
-
-If you have a PowerPoint generator script, usage is typically:
-
-```bash
-node scripts/generate-ppt.js --input report.json --output presentation.pptx
-```
-
-Adapt commands to the actual filenames in your repo.
-
-## 🧪 Development Notes & troubleshooting
-
-* Hydration mismatch in Next.js: if you see errors such as `Hydration failed because the server rendered text didn't match the client`, check for `Date.now()`, `Math.random()` or `window` usage in server-rendered components. Move such logic to client components or use `useEffect`.
-* Environment variables: keep secrets out of git. Use `.env.local` and add `.env.local` to `.gitignore`.
-* For Vercel / EC2 deployment differences: Vercel is optimized for Next.js; on EC2 you'll need to run the Node server (`npm run build` + `npm run start`) behind a reverse proxy (nginx).
+Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) in your browser.
 
 ## 🚢 Deployment
 
-### Vercel (easy for Next.js)
+This project is optimized for deployment on **Vercel**.
 
-* Connect your GitHub repository to Vercel and deploy. Supply environment variables in Vercel dashboard.
-
-### EC2 (manual)
-
-* Build: `npm run build`
-* Start: `npm run start` (use a process manager like `pm2`)
-* Configure nginx to reverse-proxy port 3000 to 80/443
-* Handle SSL using Certbot (Let's Encrypt)
+1.  Push your code to GitHub.
+2.  Import the project into Vercel.
+3.  Add the environment variables from your `.env` file to the Vercel Project Settings.
+4.  **Important**: Ensure your `DATABASE_URL` in Vercel includes the database name (e.g., `/additive_curriculum`) to avoid connection errors.
 
 ## 🤝 Contributing
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Commit changes and push
-4. Open a PR describing what you changed and why
+Contributions are welcome\! Please follow these steps:
 
-Please open issues for bugs or feature requests.
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ```
-MIT License
-
-Copyright (c) 2025 Yuvraj Rajni Sachin Deshmukh
-
-Permission is hereby granted...
-```
-
