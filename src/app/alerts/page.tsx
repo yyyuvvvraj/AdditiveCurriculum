@@ -223,8 +223,8 @@ function AlertsContent() {
 
 export default function AlertsPage() {
   return (
-    <RequireAuth>
+    
       <AlertsContent />
-    </RequireAuth>
+    
   );
 }

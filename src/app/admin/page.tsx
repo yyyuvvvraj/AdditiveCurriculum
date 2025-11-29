@@ -7,10 +7,10 @@ import AdminContent from "@/components/AdminContent";
 
 export default function AdminPage() {
   return (
-    <RequireAuth>
+   
       <AdminGuard>
         <AdminContent />
       </AdminGuard>
-    </RequireAuth>
+    
   );
 }

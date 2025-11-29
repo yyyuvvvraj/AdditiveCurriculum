@@ -4,6 +4,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import RequireAuth from "@/components/RequireAuth";
+import MaintenanceOptimizer from "@/components/MaintenanceOptimizer";
+import Chatbot from "@/components/Chatbot";
+import useRealtime from "@/hooks/useRealtime";
 import { fetchMachines, fetchInventory } from "@/lib/api";
 
 // --- VISUAL COMPONENT: MODERN HEALTH GAUGE ---
@@ -68,6 +71,7 @@ function MetricCard({ title, count, label, icon, color, href }: { title: string,
 // --- MAIN DASHBOARD CONTENT ---
 function DashboardContent() {
   const [loading, setLoading] = useState(true);
+  const { maintenanceOptimization } = useRealtime();
   
   const [stats, setStats] = useState({
     healthScore: 0,
@@ -221,7 +225,12 @@ function DashboardContent() {
             </div>
         </div>
 
-        {/* 3. BOTTOM SECTION: QUICK LINKS */}
+        {/* 3. GENETIC ALGORITHM MAINTENANCE OPTIMIZER */}
+        <div className="mt-10">
+            <MaintenanceOptimizer optimization={maintenanceOptimization} loading={loading} />
+        </div>
+
+        {/* 4. BOTTOM SECTION: QUICK LINKS */}
         <div className="mt-10">
             <h4 className="text-lg font-bold text-slate-100 mb-5 flex items-center gap-2">
                 <span className="w-2 h-2 bg-cyan-500 rounded-full"></span> 
@@ -255,6 +264,7 @@ function DashboardContent() {
         </div>
 
       </div>
+      <Chatbot />
     </div>
   );
 }

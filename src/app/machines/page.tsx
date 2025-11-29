@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import RequireAuth from "@/components/RequireAuth";
 import { fetchMachines, MachineItem } from "@/lib/api";
+import AIAnalyticsPanel from "@/components/AIAnalyticsPanel";
+import AdvancedVisualizationDashboard from "@/components/AdvancedVisualizationDashboard";
 
 // --- 1. HELPER: STATUS COLORS (Now includes Card Backgrounds) ---
 const getStatusColor = (status: string) => {
@@ -94,7 +96,82 @@ function LiveSparkline({ baseValue, variance, color }: { baseValue: number, vari
   );
 }
 
-// --- 3. MODAL COMPONENT ---
+// --- 3. ANALYTICS TABS COMPONENT ---
+function AnalyticsTabs({ machines }: { machines: any[] }) {
+  const [activeTab, setActiveTab] = React.useState<'overview' | 'analytics' | 'viz'>('overview');
+
+  return (
+    <div className="mb-10 rounded-xl border border-slate-700 bg-slate-800/30 overflow-hidden">
+      {/* Tab Buttons */}
+      <div className="flex border-b border-slate-700 bg-slate-800/50">
+        {[
+          { id: 'overview', label: '📈 Fleet Overview', icon: '📊' },
+          { id: 'analytics', label: '🤖 AI Predictions', icon: '🔮' },
+          { id: 'viz', label: '📉 Visualizations', icon: '📉' },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`flex-1 px-6 py-3 text-sm font-semibold transition-colors ${
+              activeTab === tab.id
+                ? 'bg-cyan-600/20 text-cyan-400 border-b-2 border-cyan-500'
+                : 'text-slate-400 hover:text-slate-300 border-b-2 border-transparent'
+            }`}
+          >
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div className="p-6">
+        {activeTab === 'overview' && (
+          <FleetOverviewMini machines={machines} />
+        )}
+        {activeTab === 'analytics' && (
+          <div>
+            <AIAnalyticsPanel machines={machines} />
+          </div>
+        )}
+        {activeTab === 'viz' && (
+          <div>
+            <AdvancedVisualizationDashboard machines={machines} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// --- MINI FLEET OVERVIEW ---
+function FleetOverviewMini({ machines }: { machines: any[] }) {
+  const stats = useMemo(() => {
+    if (!machines.length) return { healthy: 0, warning: 0, critical: 0, avgHealth: 0 };
+    const healthy = machines.filter(m => m.health >= 80).length;
+    const warning = machines.filter(m => m.health >= 50 && m.health < 80).length;
+    const critical = machines.filter(m => m.health < 50).length;
+    const avgHealth = Math.round(machines.reduce((sum, m) => sum + m.health, 0) / machines.length);
+    return { healthy, warning, critical, avgHealth };
+  }, [machines]);
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {[
+        { label: 'Healthy', value: stats.healthy, color: 'bg-emerald-500/20 text-emerald-400', icon: '✅' },
+        { label: 'Warning', value: stats.warning, color: 'bg-amber-500/20 text-amber-400', icon: '⚠️' },
+        { label: 'Critical', value: stats.critical, color: 'bg-red-500/20 text-red-400', icon: '🔴' },
+        { label: 'Avg Health', value: `${stats.avgHealth}%`, color: 'bg-cyan-500/20 text-cyan-400', icon: '📊' },
+      ].map((stat, idx) => (
+        <div key={idx} className={`p-4 rounded-lg border border-slate-700 ${stat.color}`}>
+          <div className="text-xs text-slate-400 mb-1">{stat.icon} {stat.label}</div>
+          <div className="text-2xl font-bold">{stat.value}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// --- 4. MODAL COMPONENT ---
 function MachineDetailsModal({ machine, onClose, onStatusUpdate }: { machine: MachineItem, onClose: () => void, onStatusUpdate: () => void }) {
   if (!machine) return null;
   const styles = getStatusColor(machine.status);
@@ -262,6 +339,9 @@ function MachinesContent() {
           </div>
         </div>
 
+        {/* Analytics Tabs - Compact Integrated Design */}
+        <AnalyticsTabs machines={mergedMachines} />
+
         {loading ? <div className="flex justify-center h-64 text-slate-500">Loading live telemetry...</div> : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filteredMachines.map((m) => {
@@ -319,5 +399,5 @@ function MachinesContent() {
 }
 
 export default function MachinesPage() {
-  return <RequireAuth><MachinesContent /></RequireAuth>;
+  return <MachinesContent />;
 }
